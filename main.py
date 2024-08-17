@@ -95,7 +95,7 @@ def ProcessCommandStart(Message: types.Message):
 	except KeyError:
 		Bot.send_message(
 			Message.chat.id, 
-			"Let\\`s get to know each other!\nWrite down your name! 🤗"
+			"Let`s get to know each other!\nWrite down your name! 🤗"
 			)
 		User.set_expected_type("call")
 	
@@ -413,7 +413,7 @@ def InlineButtonPassedDays(Call: types.CallbackQuery):
 
 	Bot.send_message(
 		Call.message.chat.id,
-		text = f"Your data has been saved\\!\n\n*{name}* was  {abs(remains)} {days} ago\\!", 
+		text = f"Your data has been saved\\!\n\n*{name}* was {abs(remains)} {days} ago\\!", 
 		parse_mode = "MarkdownV2"
 		)
 	
@@ -531,7 +531,7 @@ def ProcessDeleteReminder(Call: types.CallbackQuery):
 	if CountReminder < 1:
 		Bot.send_message(
 			Call.message.chat.id, 
-			"You haven\\`t created any reminders."
+			"You haven`t created any reminders."
 			)
 	else:
 		DeleteMessage = Bot.send_message(
@@ -574,7 +574,7 @@ def ProcessChangeName(Call: types.CallbackQuery):
 	User.set_temp_property("emoji", True)
 	Bot.send_message(
 		Call.message.chat.id,
-		"Enter your new name!!")
+		"Enter your new name!")
 	User.set_expected_type("call")
 
 	Bot.answer_callback_query(Call.id)
@@ -585,7 +585,7 @@ def ProcessInfo(Call: types.CallbackQuery):
 
 	Bot.send_message(
 		Call.message.chat.id,
-		text = "@Dnido\\_bot bot serves to remind you about events and let you track the time left before them\\.\n\n1\\) When you create an event, *daily reminders* 🔔 are no by default\\. You can turn them off in the settings by clicking on \"delete reminder\"\\. The event itself won\\`t be deleted\\.\n\n2\\) Even if you delete the reminders, don\\`t worry – we\\`ll send you a notification on the day of the event anyway\\! We won\\`t let you forget about it\\! 🤓 You can also set a *one-time reminder*, for example, 10 days before the event 📆\\.\n\n_*Use it with pleasure and share with your friends!\\!*_",
+		text = "@Dnido\\_bot bot serves to remind you about events and let you track the time left before them\\.\n\n1\\) When you create an event, *daily reminders* 🔔 are on by default\\. You can turn them off in the settings by clicking on \"delete reminder\"\\. The event itself won\\`t be deleted\\.\n\n2\\) Even if you delete the reminders, don\\`t worry – we\\`ll send you a notification on the day of the event anyway\\! We won\\`t let you forget about it\\! 🤓 You can also set a *one\\-time reminder*, for example, 10 days before the event 📆\\.\n\n_*Use it with pleasure and share with your friends\\!*_",
 		parse_mode= "MarkdownV2",
 		reply_markup= InlineKeyboardsBox.OK()
 	)

@@ -27,7 +27,7 @@ class InlineKeyboards:
 		Menu = types.InlineKeyboardMarkup()
 
 		# Генерация кнопок.
-		OK = types.InlineKeyboardButton("Ясненько", callback_data = f"OK")
+		OK = types.InlineKeyboardButton("That's clear!", callback_data = f"OK")
 		
 		# Добавление кнопок в меню.
 		Menu.add(OK, row_width= 1) 
@@ -83,7 +83,7 @@ class InlineKeyboards:
 		Menu = types.InlineKeyboardMarkup()
 
 		Share = types.InlineKeyboardButton(
-			"Поделиться", 
+			"Share", 
 			switch_inline_query='\n\nA top-notch chatbot for time-tracking reminders 🥳'
 			)
 		
