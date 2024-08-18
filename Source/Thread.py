@@ -7,6 +7,7 @@ from dublib.Methods.System import Clear
 from dublib.TelebotUtils import UsersManager
 from dublib.Polyglot import Markdown
 from telebot import TeleBot
+from telebot.apihelper import ApiTelegramException
 from datetime import datetime, timedelta
 
 import logging
@@ -130,7 +131,7 @@ class Reminder:
 				Reminders.append(f"*{Name}* is in {Remain} {Days}\\!")
 
 			base = f"Приветствую, {Call}\\!\n\n"
-			end = f"_Have a nice day!)\\!\\)_"
+			end = f"_Have a nice day\\!\\)_"
 			for i in range(len(Reminders)):
 
 				if len(base + Reminders[i] + end) < 2000: base += Reminders[i] + "\n\n" 
@@ -139,7 +140,7 @@ class Reminder:
 					try:
 						self.__Bot.send_message(ID, base + end, parse_mode="MarkdownV2")
 						logging.info(f"Отправлены ежедневные напоминания {ID}")
-					except: User.set_chat_forbidden(True)
+					except ApiTelegramException: User.set_chat_forbidden(True)
 					base = ""
 
 	def StartRemindering(self):
