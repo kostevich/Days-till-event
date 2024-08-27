@@ -88,7 +88,7 @@ def ProcessCommandStart(Message: types.Message):
 		call = User.get_property("call")
 		Bot.send_message(
 			Message.chat.id, 
-			f"We are happy to see you again, {call}! 🤗",
+			f"{call}, we are happy to see you again! 🤗",
 			reply_markup= ReplyKeyboardBox.AddMenu(User)
 			)
 		

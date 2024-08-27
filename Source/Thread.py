@@ -80,7 +80,7 @@ class Reminder:
 		try:
 			self.__Bot.send_message(
 					ID, 
-					f"Приветствую, {Call}!"
+					f"Hello, {Call}!"
 					)
 			
 		except: pass
@@ -92,7 +92,7 @@ class Reminder:
 			try:
 				self.__Bot.send_message(
 					ID, 
-					f"🔔 *REMINDER\\!* 🔔\n\nYour event *{Name}* is today\\!\n\nHave a nice day\\!",
+					f"🔔 *REMINDER\\!* 🔔\n\nYour event *{Name}* is today\\!\n\nDon't forget\\!\\)",
 					parse_mode = "MarkdownV2"
 				)
 			except: User.set_chat_forbidden(True)
@@ -112,9 +112,11 @@ class Reminder:
 	def send_long_messages(self, Messages):
 
 		for ID in Messages.keys():
+			Call = ""
 			User = self.__Manager.get_user(ID)
 			Reminders = list()
-			Call = Markdown(str(Messages[ID]["Call"])).escaped_text
+			if "Call" in Messages[ID].keys():
+				Call = Markdown(str(Messages[ID]["Call"])).escaped_text
 			for i in range(len(Messages[ID]["Events"])):
 				
 				Name = Markdown(str(Messages[ID]["Events"][i]["Name"])).escaped_text
@@ -126,11 +128,11 @@ class Reminder:
 						Remain = Calculator(skinwalker)
 						Days = FormatDays(Remain)
 
-
 				Days = FormatDays(Remain)
 				Reminders.append(f"*{Name}* is in {Remain} {Days}\\!")
-
-			base = f"Приветствую, {Call}\\!\n\n"
+			
+			if Call: base = f"Hello, {Call}\\!\n\n"
+			else: base = ""
 			end = f"_Have a nice day\\!\\)_"
 			for i in range(len(Reminders)):
 
@@ -140,7 +142,7 @@ class Reminder:
 					try:
 						self.__Bot.send_message(ID, base + end, parse_mode="MarkdownV2")
 						logging.info(f"Отправлены ежедневные напоминания {ID}")
-					except ApiTelegramException: User.set_chat_forbidden(True)
+					except: User.set_chat_forbidden(True)
 					base = ""
 
 	def StartRemindering(self):
@@ -176,7 +178,10 @@ class Reminder:
 							if not IsHello:
 								Messages[ID] = {"Call": Call}
 								IsHello = True	
-							Messages[ID].update({"Events": Events})
+							if ID in Messages.keys():
+								Messages[ID].update({"Events": Events})
+							else:
+								Messages[ID] = {"Events": Events}
 					
 					if self.__CheckRemind(Event) and self.__CheckRemindDate(Event):
 

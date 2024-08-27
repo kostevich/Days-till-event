@@ -84,7 +84,7 @@ class InlineKeyboards:
 
 		Share = types.InlineKeyboardButton(
 			"Share", 
-			switch_inline_query='\n\nA top-notch chatbot for time-tracking reminders 🥳'
+			switch_inline_query='\n\nJust a top bot for time-tracking reminders 🥳'
 			)
 		
 		Menu.add(Share)
