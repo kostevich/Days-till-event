@@ -58,12 +58,14 @@ AdminPanel = Panel()
 #==========================================================================================#
 
 StartRemindering = Settings["start_remindering"]
+ContinueRemindering = Settings["continue_remindering"]
 
 #==========================================================================================#
 # >>>>> ДОБАВЛЕНИЕ ЗАДАНИЙ В APSHEDULER <<<<< #
 #==========================================================================================#
 
 scheduler.add_job(reminder.StartRemindering, 'cron', hour = StartRemindering["hour"], minute=StartRemindering["minute"])
+scheduler.add_job(reminder.ContinueRemindering, 'cron', hour = ContinueRemindering["hour"], minute=ContinueRemindering["minute"])
 scheduler.start()
 
 #==========================================================================================#
@@ -585,7 +587,7 @@ def ProcessInfo(Call: types.CallbackQuery):
 
 	Bot.send_message(
 		Call.message.chat.id,
-		text = "@Dnido\\_bot bot serves to remind you about events and let you track the time left before them\\.\n\n1\\) When you create an event, *daily reminders* 🔔 are on by default\\. You can turn them off in the settings by clicking on \"deactivate reminder\"\\. The event itself won\\`t be deleted\\.\n\n2\\) Even if you delete the reminders, don\\`t worry – we\\`ll send you a notification on the day of the event anyway\\! We won\\`t let you forget about it\\! 🤓 You can also set a *one\\-time reminder*, for example, 10 days before the event 📆\\.\n\n_*Use it with pleasure and share with your friends\\!*_",
+		text = "@Dnido\\_bot bot serves to remind you about events and let you track the time left before them\\.\n\n1\\) When you create an event, *daily reminders* 🔔 are on by default\\. You can turn them off any moment in the settings by clicking on \"deactivate reminder\"\\. The event itself won\\`t be deleted\\.\n\n2\\) Even if you delete the reminders, don\\`t worry – we\\`ll send you a notification on the day of the event anyway\\! We won\\`t let you forget about it\\! 🤓 You can also set a *one\\-time reminder*, for example, 10 days before the event 📆\\.\n\n_*Use it with pleasure and share with your friends\\!*_",
 		parse_mode= "MarkdownV2",
 		reply_markup= InlineKeyboardsBox.OK()
 	)
