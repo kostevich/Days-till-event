@@ -94,10 +94,7 @@ class Reminder:
 					f"🔔 *REMINDER\\!* 🔔\n\nYour event *{Name}* is today\\!\n\nDon't forget\\!\\)",
 					parse_mode = "MarkdownV2"
 				)
-				Events: dict = User.get_property("events")
-				ReminderDict: dict = {"ReminderFormat": "WithoutReminders"}
-				Events[EventID].update(ReminderDict)
-				User.set_property("events", Events)
+				
 				logging.info(f"Отправленно сегодняшнее напоминание {ID}")
 			except Exception as E: 
 				logging.info(f"{E}, {ID}")
@@ -112,7 +109,12 @@ class Reminder:
 				f"🔔 *REMINDER\\!* 🔔\n\nThe event *{Name}* is in {Reminder} {days}\\!\n\nHave a nice day\\!",
 				parse_mode = "MarkdownV2"
 				)
+				Events: dict = User.get_property("events")
+				ReminderDict: dict = {"ReminderFormat": "WithoutReminders"}
+				Events[EventID].update(ReminderDict)
+				User.set_property("events", Events)
 				logging.info(f"Отправленно разовое напоминание {ID}")
+				
 			except Exception as E: 
 				logging.info(f"{E}, {ID}")
 				User.set_chat_forbidden(True)

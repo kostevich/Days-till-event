@@ -256,7 +256,6 @@ def ProcessText(Message: types.Message):
 			name = Markdown(User.get_property("events")[FreeID]["Name"]).escaped_text
 			days = FormatDays(remains)
 			
-
 			if remains > 0:
 				Bot.send_message(
 					Message.chat.id,
@@ -314,7 +313,7 @@ def ProcessText(Message: types.Message):
 		else:
 			Bot.send_message(
 				Message.chat.id,
-				"Я не совсем понял, что вы от меня хотите.")
+				"I don't quite understand what you want from me.")
 		return
 
 AdminPanel.decorators.inline_keyboards(Bot, Manager)
@@ -548,13 +547,15 @@ def ProcessDeleteReminder(Call: types.CallbackQuery):
 		
 			if "ReminderFormat" in somedict[EventID].keys():
 				
-				if somedict[EventID]["ReminderFormat"] == "EveryDay":
-					if "Format" not in somedict[EventID].keys():
+				if somedict[EventID]["ReminderFormat"] in "EveryDay":
+
+					if "Format" not in somedict[EventID].keys() or "Format" in somedict[EventID].keys() and somedict[EventID]["Format"] == "Remained":
 						Bot.send_message(
 						Call.message.chat.id,
-						f"*{Name}*\nУстановлены ежедневные напоминания\\!",
+						f"*{Name}*\nDaily reminders are set\\!",
 						reply_markup = InlineKeyboardsBox.RemoveReminder(EventID),
 						parse_mode = "MarkdownV2")
+
 				if somedict[EventID]["ReminderFormat"] == "OnceDay":
 					if "Reminder" in somedict[EventID].keys():
 
@@ -562,7 +563,7 @@ def ProcessDeleteReminder(Call: types.CallbackQuery):
 						days = FormatDays(Reminder)
 						Bot.send_message(
 							Call.message.chat.id,
-							f"*{Name}*\nНапоминание установлено за {Reminder} {days}\\!",
+							f"*{Name}*\nThe reminder is set for {Reminder} {days}\\!",
 							reply_markup = InlineKeyboardsBox.RemoveReminder(EventID),
 							parse_mode = "MarkdownV2")
 
@@ -599,7 +600,7 @@ def ProcessEveryDayReminders(Call: types.CallbackQuery):
 	User = Manager.auth(Call.from_user)
 
 	Events: dict = User.get_property("events")
-	ReminderDict: dict = {"ReminderFormat": "EveryDay"}
+	ReminderDict: dict = {"ReminderFormat": "EveryDay", "Format": "Remained"}
 
 	EventID = User.get_property("EventsID")
 	Events[EventID].update(ReminderDict)
@@ -619,7 +620,7 @@ def ProcessOnceDayReminders(Call: types.CallbackQuery):
 	User = Manager.auth(Call.from_user)
 
 	Events: dict = User.get_property("events")
-	ReminderDict: dict = {"ReminderFormat": "OnceDay"}
+	ReminderDict: dict = {"ReminderFormat": "OnceDay", "Format": "Remained"}
 
 	EventID = User.get_property("EventsID")
 	Events[EventID].update(ReminderDict)
